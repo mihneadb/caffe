@@ -1,0 +1,7 @@
+Match labels between imagenet & 101
+Write code to classify using reference imagenet caffenet on 101 images
+
+Accuracy, Good, No Label, Total
+76.0658914729 785 163 1032.0
+
+
