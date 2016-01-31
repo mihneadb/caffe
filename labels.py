@@ -157,6 +157,62 @@ labels = {
     'watch': [531, 826]
 }
 
+numeric_labels = {
+    'Leopards': 36,
+    'Motorbikes': 21,
+    'accordion': 6,
+    'airplanes': 42,
+    'ant': 28,
+    'barrel': 49,
+    'beaver': 30,
+    'binocular': 32,
+    'brain': 23,
+    'butterfly': 38,
+    'camera': 9,
+    'cannon': 15,
+    'car_side': 31,
+    'ceiling_fan': 17,
+    'cellphone': 46,
+    'chair': 5,
+    'cougar_body': 11,
+    'cougar_face': 26,
+    'crab': 10,
+    'crayfish': 50,
+    'crocodile': 3,
+    'crocodile_head': 19,
+    'cup': 47,
+    'dalmatian': 45,
+    'dragonfly': 13,
+    'electric_guitar': 44,
+    'elephant': 35,
+    'ewer': 8,
+    'flamingo': 22,
+    'flamingo_head': 39,
+    'grand_piano': 16,
+    'hedgehog': 51,
+    'kangaroo': 43,
+    'lamp': 34,
+    'laptop': 1,
+    'llama': 18,
+    'lobster': 29,
+    'nautilus': 27,
+    'pizza': 37,
+    'platypus': 48,
+    'revolver': 33,
+    'saxophone': 25,
+    'schooner': 12,
+    'scorpion': 7,
+    'soccer_ball': 40,
+    'starfish': 14,
+    'stop_sign': 0,
+    'strawberry': 24,
+    'tick': 20,
+    'trilobite': 41,
+    'umbrella': 4,
+    'watch': 2
+}
+
+
 
 def get_label_name(label):
     for k, v in labels.iteritems():

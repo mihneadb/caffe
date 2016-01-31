@@ -1,7 +1,7 @@
 import os
 import random
 
-from labels import labels
+from labels import labels, numeric_labels
 
 
 PATH = '~/Desktop/101_ObjectCategories/'
@@ -29,11 +29,15 @@ for root, dirs, files in os.walk(os.path.expanduser(PATH)):
 random.shuffle(train_data)
 random.shuffle(test_data)
 
-with open('train_data.txt', 'w') as f:
+with open('train_data_caffe.txt', 'w') as f:
     for path, label in train_data:
-        f.write('%s %s\n' % (path, label))
+        f.write('%s %s\n' % (path, numeric_labels[label]))
 
-with open('test_data.txt', 'w') as f:
+with open('test_data_caffe.txt', 'w') as f:
+    for path, label in test_data:
+        f.write('%s %s\n' % (path, numeric_labels[label]))
+
+with open('test_data_python.txt', 'w') as f:
     for path, label in test_data:
         f.write('%s %s\n' % (path, label))
 
