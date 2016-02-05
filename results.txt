@@ -4,4 +4,63 @@ Write code to classify using reference imagenet caffenet on 101 images
 Accuracy, Good, No Label, Total
 76.0658914729 785 163 1032.0
 
+Training alexnet from scratch. Replaced num outputs with 52
+
+I0202 08:12:01.899304 31231 solver.cpp:318] Iteration 100000, loss = 4.4509e-05
+I0202 08:12:01.899333 31231 solver.cpp:338] Iteration 100000, Testing net (#0)
+I0202 08:13:32.905737 31231 solver.cpp:406]     Test net output #0: accuracy = 0.716939
+I0202 08:13:32.905834 31231 solver.cpp:406]     Test net output #1: loss = 1.90992 (* 1 = 1.90992 loss)
+
+
+However with manual testing:
+Accuracy, Good, No Label, Total
+34.8792270531 361 0 1035.0
+
+
+Caffe test
+
+./build/tools/caffe test --model models/bvlc_reference_caffenet/train_val.prototxt --weights models/bvlc_reference_caffenet/caffenet_train_iter_100000.caffemodel
+
+I0202 22:06:57.674223 14861 caffe.cpp:270] Loss: 1.90892
+I0202 22:06:57.674235 14861 caffe.cpp:282] accuracy = 0.7156
+I0202 22:06:57.674245 14861 caffe.cpp:282] loss = 1.90892 (* 1 = 1.90892 loss)
+
+Rezolvat problema - era de la mean file care era calculat pt imagenet. Dupa ce
+nu l-am mai pasat:
+
+Accuracy, Good, No Label, Total
+71.690821256 742 0 1035.0
+
+
+Deci reteaua antrenata de la 0 pe poze dupa 100k iteratii (o noapte) e mai slaba
+decat cea preantrenata pe imagenet (*Dar avea 450k iters*).
+
+
+Fine tune reteaua existenta peste pozele noi. Schimbat ultimul layer sa fie de
+dimensiunea corecta. Marit learning rate multiplier ca sa invete mai mult
+acel layer (restul sunt deja antrenate). Micsorat overall learning rate pt
+ca modelul e deja antrenat. Si stepsize mai mic ca sa scada mai repede learning
+rate. Astea toate sunt tips din docs pt fine tune.
+
+
+Accuracy, Good, No Label, Total
+1.44927536232 15 0 1035.0
+
+Realizat ca nu are sens asa ca nu-s destule date. Noua idee: relabel datele noi
+cu labels din modelul de imagenet. Antrenat peste datele alea. Insa nici asta
+nu merge mai bine. Suspectez ca problema este ca de ex pentru "airplanes" am 3
+labels. Cand fac noile date etichetate, trebuie sa aleg una dintre cele 3 labels
+de airplanes. La fel pt toate cele 50+ labels. Ar trebui cumva sa nimeresc fix
+pe ce stie reteaua. Am incercat sa fac cu random.choice in ideea ca poate iese
+ceva, dar nu a mers.
+
+Tot incercand cu random.choice am ajuns la Test net output #0: accuracy = 0.708219.
+Progres!
+
+Final results
+Accuracy, Good, No Label, Total
+86.6666666667 897 0 1035.0
+
+Intr-adevar, cel mai bun rezultat a fost imbunatatind net-ul preantrenat pe
+datele noi.
 

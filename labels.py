@@ -220,3 +220,9 @@ def get_label_name(label):
             return k
     return None
 
+def get_small_label_name(label):
+    for k, v in numeric_labels.iteritems():
+        if int(label) == int(v):
+            return k
+    return None
+

@@ -22,7 +22,7 @@ UPLOAD_FOLDER = '/tmp/caffe_demos_uploads'
 ALLOWED_IMAGE_EXTENSIONS = set(['png', 'bmp', 'jpg', 'jpe', 'jpeg', 'gif'])
 
 
-from labels import labels, get_label_name
+from labels import labels
 ALLOWED_LABELS = []
 for v in labels.values():
     ALLOWED_LABELS.extend(v)
@@ -65,7 +65,7 @@ class ImagenetClassifier(object):
         self.net = caffe.Classifier(
             model_def_file, pretrained_model_file,
             image_dims=(image_dim, image_dim), raw_scale=raw_scale,
-            mean=np.load(mean_file).mean(1).mean(1), channel_swap=(2, 1, 0)
+             channel_swap=(2, 1, 0)
         )
 
         with open(class_labels_file) as f:
@@ -92,6 +92,8 @@ class ImagenetClassifier(object):
 
             indices = (-scores).argsort()[:5]
             predictions = self.labels[indices]
+
+            return indices[0]
 
             # Keep meaningful labels.
             relevant_indices = []
@@ -126,20 +128,20 @@ logging.getLogger().setLevel(logging.INFO)
 good = 0
 no_label = 0
 total = 0.0
-test_data_file = '/home/mihnea/localCode/caffe/test_data_python.txt'
+test_data_file = '/home/mihnea/localCode/caffe/test_data_caffe.txt'
 with open(test_data_file) as f:
     for line in f:
         total += 1
 
         img_path, expected_label = line.split()
         r = classify(img_path)
+        #print expected_label, r
 
         if r is None:
             no_label += 1
             continue
 
-        label = get_label_name(r)
-        if label == expected_label:
+        if int(r) == int(expected_label):
             good += 1
 
 print 'Accuracy, Good, No Label, Total'
